@@ -1,0 +1,370 @@
+class_name: UserQualityVersion
+class_module: user_quality_version
+index_value: user_id
+test_sampling_attributes:
+  - day_horizon
+  - - version
+    - channel
+columns_yearly: &col_year
+  - first_event_month
+  - first_event_week_of_year
+columns_d0: &col_d0
+  - d0bookings
+  - event_day_of_week
+  - event_local_time
+  - gender
+  - order_type_delivery
+  - weekday_delivery
+columns_d7: &col_d7
+  - *col_d0
+  - d2to7b
+  - d2to7o
+  - d7b
+  - d7o
+columns_d14: &col_d14
+  - *col_d7
+  - d2to14b
+  - d2to14o
+  - d7to14b
+  - d14b
+  - d14o
+columns_d21: &col_d21
+  - *col_d14
+  - d2to21b
+  - d2to21o
+  - d7to21b
+  - d21b
+  - d21o
+columns_d30: &col_d30
+  - *col_d21
+  - d2to30b
+  - d2to30o
+  - d30b
+  - d30o
+columns_d90: &col_d90
+  - *col_d30
+  - d30to60b
+  - d60to90b
+  - d90b
+default_xgb: &def_xgb
+  max_depth: 5
+  min_child_weight: 10.0
+  gamma: 0.0
+  eta: 0.5
+  silent: 1
+  tree_method: auto
+  max_bin: 20
+default_channels: &def_channels
+  - paid
+  - brand
+  - private_store
+  - seo
+  - refer_a_friend
+  - other
+non_private_store_channels: &non_pvt_channels
+  - paid
+  - brand
+  - seo
+  - refer_a_friend
+  - other
+predictions:
+  -
+    name: y1b_d0_v6
+    day_horizon: 0
+    version: v6
+    channel: *def_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d0
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d0bookings
+    xgb_params: *def_xgb
+    official_flag: false
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d7_v6
+    day_horizon: 7
+    version: v6
+    channel: *def_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d7
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d7b
+    xgb_params: *def_xgb
+    official_flag: false
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d14_v6
+    day_horizon: 14
+    version: v6
+    channel: *def_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d14
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d14b
+    xgb_params: *def_xgb
+    official_flag: false
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d21_v6
+    day_horizon: 21
+    version: v6
+    channel: *def_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d21
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d21b
+    xgb_params: *def_xgb
+    official_flag: false
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d30_v6
+    day_horizon: 30
+    version: v6
+    channel: *def_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d30
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d30b
+    xgb_params: *def_xgb
+    official_flag: false
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d90_v6
+    day_horizon: 90
+    version: v6
+    channel: *def_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d90
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d90b
+    xgb_params: *def_xgb
+    official_flag: false
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d0_v7
+    day_horizon: 0
+    version: v7
+    channel: *non_pvt_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d0
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d0bookings
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d7_v7
+    day_horizon: 7
+    version: v7
+    channel: *non_pvt_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d7
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d7b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d14_v7
+    day_horizon: 14
+    version: v7
+    channel: *non_pvt_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d14
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d14b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d21_v7
+    day_horizon: 21
+    version: v7
+    channel: *non_pvt_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d21
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d21b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d30_v7
+    day_horizon: 30
+    version: v7
+    channel: *non_pvt_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d30
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d30b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d90_v7
+    day_horizon: 90
+    version: v7
+    channel: *non_pvt_channels
+    target_purpose: finance
+    training_columns:
+      - *col_d90
+      - *col_year
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d90b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .8
+    stratify_flag: false
+  -
+    name: y1b_d0_v7
+    day_horizon: 0
+    version: v7
+    channel:
+      - private_store
+    target_purpose: finance
+    training_columns: *col_d0
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d0bookings
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .95
+    stratify_flag: true
+    stratify_bins:
+      - 10000
+  -
+    name: y1b_d7_v7
+    day_horizon: 7
+    version: v7
+    channel:
+      - private_store
+    target_purpose: finance
+    training_columns: *col_d7
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d7b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .95
+    stratify_flag: true
+    stratify_bins:
+      - 10000
+  -
+    name: y1b_d14_v7
+    day_horizon: 14
+    version: v7
+    channel:
+      - private_store
+    target_purpose: finance
+    training_columns: *col_d14
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d14b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .95
+    stratify_flag: true
+    stratify_bins:
+      - 10000
+  -
+    name: y1b_d21_v7
+    day_horizon: 21
+    version: v7
+    channel:
+      - private_store
+    target_purpose: finance
+    training_columns: *col_d21
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d21b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .95
+    stratify_flag: true
+    stratify_bins:
+      - 10000
+  -
+    name: y1b_d30_v7
+    day_horizon: 30
+    version: v7
+    channel:
+      - private_store
+    target_purpose: finance
+    training_columns: *col_d30
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d30b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .95
+    stratify_flag: true
+    stratify_bins:
+      - 10000
+  -
+    name: y1b_d90_v7
+    day_horizon: 90
+    version: v7
+    channel:
+      - private_store
+    target_purpose: finance
+    training_columns: *col_d90
+    goal_column: year_1_bookings
+    goal_horizon: 365
+    min_value_column: d90b
+    xgb_params: *def_xgb
+    official_flag: true
+    percent_training: .95
+    stratify_flag: true
+    stratify_bins:
+      - 10000
+accuracy_subsets:
+  cpc_google: first_touch_lead_channel(T.cpc_google)
+  cpc_bing: first_touch_lead_channel(T.cpc_bing)
+  direct: first_touch_lead_channel(T.direct)
+  organic: first_touch_lead_channel(T.organic)
+  refer_a_friend: first_touch_lead_channel(T.refer_a_friend)
