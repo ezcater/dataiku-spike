@@ -102,11 +102,13 @@ class BasePredictor():
     
     self.metrics_to_datadog(version)
     
-    version.save_local_files()
+    self.output_data = version.output_data
     
-    # export local files out to s3
-    if not self.validate_data(version) and send_to_s3 and os.environ.get('EZCATER_WAREHOUSE_BUCKET'):
-      version.upload_to_s3()
+    # version.save_local_files()
+    
+    # # export local files out to s3
+    # if not self.validate_data(version) and send_to_s3 and os.environ.get('EZCATER_WAREHOUSE_BUCKET'):
+    #   version.upload_to_s3()
   
   def run_and_notify(self, send_to_s3_override=False):
     try:
@@ -131,13 +133,14 @@ class BasePredictor():
     return errors
   
   def metrics_to_datadog(self, version):
-    def update_gauge(title, value):
-      statsd.gauge("sky_py.{}.{}".format(self.predictor_type, title), value,
-                   tags=version.metrics_tags)
-    
-    metrics = version.generate_metrics()
-    for key, value in metrics.items():
-      update_gauge(key, value)
+    return
+    # def update_gauge(title, value):
+    #   statsd.gauge("sky_py.{}.{}".format(self.predictor_type, title), value,
+    #                tags=version.metrics_tags)
+    #
+    # metrics = version.generate_metrics()
+    # for key, value in metrics.items():
+    #   update_gauge(key, value)
   
   def sample_pred_config(self, initial_config, sampling_attributes=None):
     def sample_one_of_each(df, col_name):
